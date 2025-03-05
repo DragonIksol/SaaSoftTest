@@ -81,10 +81,8 @@ const validateAccount = () => {
     hasChanges.value &&
     [...(tr.value as HTMLTableRowElement).querySelectorAll(':where(input, select)')].every((el) => (el as HTMLInputElement | HTMLSelectElement).validity.valid)
   ) {
-    accountStore.saveAccount({
-      ...account,
-      password: account.type === 'Локальная' ? account.password : undefined
-    })
+    if (account.type !== 'Локальная') delete account.password
+    accountStore.saveAccount(account)
     hasChanges.value = false
   }
 }

@@ -13,7 +13,8 @@ export const useAccountStore = defineStore('accountStore', {
       const response = await $fetch('/api/account', {
         method: 'get'
       })
-      this.accounts = response.accounts
+      const unsavedAccounts = this.accounts.filter(account => account.id === undefined)
+      this.accounts = [...response.accounts, ...unsavedAccounts]
     },
 
     async addAccount(account: Account) {
@@ -51,6 +52,8 @@ export const useAccountStore = defineStore('accountStore', {
           body: account
         })
       } else {
+        const accIndex = this.accounts.indexOf(account)
+        if (accIndex !== -1) this.removeAccount(accIndex)
         await $fetch('/api/account', {
           method: 'post',
           body: account

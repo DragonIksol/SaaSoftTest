@@ -1,5 +1,5 @@
 <template>
-    <div class="vflex">
+    <div class="vflex acc-table-container">
         <h2 class="hflex table-header">Учетные записи <button @click="addAccount" class="add-btn">+</button></h2>
         <div class="hflex help"><img src="/icons/interrogation.svg" alt="interrogation" class="icon-medium">Для указания нескольких меток для одной пары логин/пароль используйте разделитель ;</div>
 
@@ -44,10 +44,14 @@ const removeAccount = (index: number) => {
 </script>
 
 <style scoped>
+.acc-table-container {
+  height: 100%;
+  overflow: auto;
+}
+
 .accounts-table {
   border-spacing: 1em;
 }
-
 .accounts-table th {
   text-align: left;
   color: var(--header-color);
