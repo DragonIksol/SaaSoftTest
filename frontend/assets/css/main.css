@@ -1,0 +1,50 @@
+:root {
+    --header-color: #a9a9a9;
+    --border-color: #eef4fa;
+    --active-color: #c8dbef;
+    --main-border-radius: 0.4rem;
+    --main-padding: 0.5em;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Arial', sans-serif;
+}
+
+input, select {
+    padding: var(--main-padding);
+    border: 2px solid var(--border-color);
+    border-radius: var(--main-border-radius);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    border: none;
+}
+
+.icon-medium {
+    width: 30px;
+    height: 30px;
+}
+
+.hflex, .vflex {
+    display: flex;
+    justify-content: start;
+    border-radius: var(--main-border-radius);
+    padding: var(--main-padding);
+    gap: 1em;
+}
+.hflex {
+    flex-direction: row;
+    align-items: center;
+}
+.vflex {
+    flex-direction: column;
+}

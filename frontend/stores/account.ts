@@ -7,6 +7,9 @@ export const useAccountStore = defineStore('accountStore', {
   }),
   actions: {
     async fetchAccounts() {
+      /**
+       * Получение массива всех аккаунтов
+       */
       const response = await $fetch('/api/account', {
         method: 'get'
       })
@@ -14,10 +17,16 @@ export const useAccountStore = defineStore('accountStore', {
     },
 
     async addAccount(account: Account) {
+      /**
+       * Добавляет аккаунт в локальный массив аккаунтов
+       */
       this.accounts.push(account)
     },
 
     async removeAccount(index: number) {
+      /**
+       * Совершает запрос на удаление аккаунта при наличии account.id или удаляет из локального массива аккаунтов
+       */
       const account = this.accounts[index];
       if (account.id !== undefined) {
         await $fetch('/api/account', {
@@ -30,14 +39,19 @@ export const useAccountStore = defineStore('accountStore', {
       }
     },
 
-    async updateAccount(account: Partial<Account>) {
+    async saveAccount(account: Account) {
+      /**
+       * Сохранение аккаунта
+       * При наличии account.id обновляет существующий аккаунт
+       * При отсутствии создаёт новый аккаунт
+       */
       if (account.id !== undefined) {
-        const response = await $fetch('/api/account', {
+        await $fetch('/api/account', {
           method: 'put',
           body: account
         })
       } else {
-        const response = await $fetch('/api/account', {
+        await $fetch('/api/account', {
           method: 'post',
           body: account
         })

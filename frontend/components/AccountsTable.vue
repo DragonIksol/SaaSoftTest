@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <h2>Учетные записи <button @click="addAccount">+</button></h2>
-        <div>Для указания нескольких меток для одной пары логин/пароль используйте разделитель ;</div>
+    <div class="vflex">
+        <h2 class="hflex table-header">Учетные записи <button @click="addAccount" class="add-btn">+</button></h2>
+        <div class="hflex help"><img src="/icons/interrogation.svg" alt="interrogation" class="icon-medium">Для указания нескольких меток для одной пары логин/пароль используйте разделитель ;</div>
 
-        <table>
+        <table class="accounts-table">
           <thead>
             <tr>
               <th>Метка</th>
@@ -22,83 +22,64 @@
         </table>
     </div>
 </template>
-<script lang="ts">
-import { ref, computed } from 'vue'
-import type { Account } from '~/types/account'
+<script lang="ts" setup>
+import { computed } from 'vue'
 
-export default {
-  setup() {
-    const accountStore = useAccountStore()
-    accountStore.fetchAccounts()
-    const accounts = computed(() => accountStore.accounts)
+const accountStore = useAccountStore()
+accountStore.fetchAccounts()
+const accounts = computed(() => accountStore.accounts)
 
-    const addAccount = () => {
-      accountStore.addAccount({
-        label: [{text: ''}],
-        type: '',
-        login: '',
-        password: '',
-      })
-    }
+const addAccount = () => {
+  accountStore.addAccount({
+    label: [{text: ''}],
+    type: '',
+    login: '',
+    password: '',
+  })
+}
 
-    const removeAccount = (index: number) => {
-      accountStore.removeAccount(index)
-    }
-
-    // const validateAccount = (index: number) => {
-    //   const account = accounts.value[index]
-    //   console.log(account);
-      
-    //   if (hasChanges.value) {
-    //     if (
-    //       account.label.length <= 50 &&
-    //       (account.login.length > 0 && account.login.length <= 100) &&
-    //       account.type &&
-    //       (
-    //         account.type === 'Локальная' ? (account.password as string).length > 0 && (account.password as string).length <= 100 : true
-    //       )
-    //     ) {
-    //         accountStore.updateAccount(index, {
-    //           label: account.label,
-    //           type: account.type,
-    //           login: account.login,
-    //           password: account.type === 'Локальная' ? account.password : undefined
-    //         })
-    //     }
-    //   }
-    //   // account.labelValid = account.label.length <= 50
-    //   // account.loginValid = account.login.length > 0 && account.login.length <= 100
-    //   // if (account.type === 'Локальная') {
-    //   //   account.passwordValid = account.password.length > 0 && account.password.length <= 100
-    //   // } else {
-    //   //   account.passwordValid = true
-    //   // }
-
-    //   // if (account.labelValid && account.loginValid && account.passwordValid) {
-    //   //   // Преобразование метки в массив объектов
-    //   //   const labels = account.label.split(';').filter(Boolean).map(label => (label))
-    //   //   accountStore.updateAccount(index, {
-    //   //     label: labels,
-    //   //     type: account.type,
-    //   //     login: account.login,
-    //   //     password: account.type === 'Локальная' ? account.password : undefined
-    //   //   })
-    //   // }
-    // }
-
-    return {
-      accounts,
-      addAccount,
-      removeAccount,
-      // validateAccount
-    }
-  }
+const removeAccount = (index: number) => {
+  accountStore.removeAccount(index)
 }
 </script>
 
-<style>
-.row {
-  display: flex;
-
+<style scoped>
+.accounts-table {
+  border-spacing: 1em;
 }
+
+.accounts-table th {
+  text-align: left;
+  color: var(--header-color);
+  font-weight: normal;
+}
+
+.add-btn {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--main-border-radius);
+  background-color: #0000;
+  cursor: pointer;
+  font-size: xx-large;
+}
+.add-btn:hover {
+  background-color: var(--border-color);
+}
+.add-btn:active {
+  background-color: var(--active-color);
+}
+
+.help {
+  background-color: var(--border-color);
+}
+.table-header, .help {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.table-header {
+  padding-left: 0;
+}
+
 </style>
